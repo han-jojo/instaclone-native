@@ -1,9 +1,9 @@
 import React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
-import styled from "styled-components";
+import { TouchableOpacity } from "react-native";
+import styled from "styled-components/native";
 import { colors } from "../colors";
 
-const Container = styled.div`
+const Container = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
@@ -33,9 +33,11 @@ const LoginLink = styled.Text`
 `;
 
 export default function Welcome({ navigation }) {
+  const goToCreateAccount = () => navigation.navigate("CreateAccount");
+  const goToLogIn = () => navigation.navigate("LogIn");
   return (
     <Container>
-      <Logo resizeMode="contain" source={require("../assets/icon.png")} />
+      <Logo resizeMode="contain" source={require("../assets/logo.png")} />
       <TouchableOpacity onPress={goToCreateAccount}>
         <CreateAccount>
           <CraeteAccountText>Create Account</CraeteAccountText>
