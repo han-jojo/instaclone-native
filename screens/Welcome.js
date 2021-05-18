@@ -18,13 +18,15 @@ export default function Welcome({ navigation }) {
   return (
     <AuthLayout>
       <AuthButton
-        text="Create New Account"
+        text="회원가입"
         disabled="{false}"
         onPress={goToCreateAccount}
       />
-      <TouchableOpacity onPress={goToLogIn}>
-        <LoginLink>Log In</LoginLink>
-      </TouchableOpacity>
+      <AuthButton
+        text="로그인"
+        disabled="{false}"
+        onPress={goToLogIn}
+      />
     </AuthLayout>
   );
 }
