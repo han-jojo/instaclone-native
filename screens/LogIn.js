@@ -2,8 +2,7 @@ import { gql, useMutation } from "@apollo/client";
 import React, { useRef } from "react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { isLoggedInVar } from "../apollo";
-import { Text, View, TouchableOpacity } from "react-native";
+import { isLoggedInVar, logUserIn } from "../apollo";
 import { TextInput } from "../components/auth/AuthShared";
 import AuthLayout from "../components/auth/AuthLayout";
 import AuthButton from "../components/auth/AuthButton";
@@ -26,12 +25,12 @@ export default function Login({ route: { params } }) {
     },
   });
   const passwordRef = useRef();
-  const onComplete = (data) => {
+  const onCompleted = async (data) => {
     const {
       login: { ok, token },
     } = data;
     if (ok) {
-      isLoggedInVar(true);
+      await isLoggedInVar(token);
     }
   };
 
