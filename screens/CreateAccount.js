@@ -22,11 +22,21 @@ export default function CreateAccount() {
   };
 
   useEffect(() => {
-    register("firstName");
-    register("lastName");
-    register("username");
-    register("email");
-    register("password");
+    register("firstName", {
+      required: true,
+    });
+    register("lastName", {
+      required: true,
+    });
+    register("username", {
+      required: true,
+    });
+    register("email", {
+      required: true,
+    });
+    register("password", {
+      required: true,
+    });
   }, [register]);
 
   return (
@@ -73,11 +83,11 @@ export default function CreateAccount() {
         returnKeyType="done"
         lastOne={true}
         onChangeText={(text) => setValue("password", text)}
-        onPress={handleSubmit(onValid)}
+        onSubmitEditing={handleSubmit(onValid)}
       />
       <AuthButton
         text="회원가입"
-        disabled={true}
+        disabled={false}
         onPress={handleSubmit(onValid)}
       />
     </AuthLayout>
