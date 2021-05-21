@@ -29,13 +29,13 @@ const CREATE_ACCOUNT_MUTATION = gql`
 `;
 
 export default function CreateAccount({ navigation }) {
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit, setValue, getValues } = useForm();
 
   const onCompleted = (data) => {
     const {
       createAccount: { ok },
     } = data;
-    const { username, password } = getValue();
+    const { username, password } = getValues();
 
     if (ok) {
       navigation.navigate("LogIn", {
