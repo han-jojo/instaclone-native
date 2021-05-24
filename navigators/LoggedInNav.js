@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import TabIcon from "../components/nav/TabIcon";
 import { View } from "react-native";
+import TabIcon from "../components/nav/TabIcon";
 import SharedStackNav from "./SharedStackNav";
 
 const Tabs = createBottomTabNavigator();
@@ -22,7 +22,7 @@ export default function LoggedInNav() {
         name="Feed"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon iconName="home" color={color} focused={focused} />
+            <TabIcon iconName={"home"} color={color} focused={focused} />
           ),
         }}
       >
@@ -32,7 +32,7 @@ export default function LoggedInNav() {
         name="Search"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon iconName="search" color={color} focused={focused} />
+            <TabIcon iconName={"search"} color={color} focused={focused} />
           ),
         }}
       >
@@ -51,7 +51,7 @@ export default function LoggedInNav() {
         name="Notifications"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon iconName="heart" color={color} focused={focused} />
+            <TabIcon iconName={"heart"} color={color} focused={focused} />
           ),
         }}
       >
@@ -61,7 +61,7 @@ export default function LoggedInNav() {
         name="Me"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon iconName="person" color={color} focused={focused} />
+            <TabIcon iconName={"person"} color={color} focused={focused} />
           ),
         }}
       >

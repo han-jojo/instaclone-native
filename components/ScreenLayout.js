@@ -1,4 +1,3 @@
-import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 import React from "react";
 import { ActivityIndicator, View } from "react-native";
 

@@ -12,8 +12,14 @@ export const tokenVar = makeVar("");
 
 const TOKEN = "token";
 
+export const logUserIn = async (token) => {
+  await AsyncStorage.setItem(TOKEN, token);
+  isLoggedInVar(true);
+  tokenVar(token);
+};
+
 export const logUserOut = async () => {
-  await AsyncStorage.romoveItem(TOKEN);
+  await AsyncStorage.removeItem(TOKEN);
   isLoggedInVar(false);
   tokenVar(null);
 };
@@ -22,7 +28,7 @@ const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
 });
 
-const authLink = setContext((_, { header }) => {
+const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
@@ -30,12 +36,6 @@ const authLink = setContext((_, { header }) => {
     },
   };
 });
-
-export const logUserIn = async (token) => {
-  await AsyncStorage.setItem(TOKEN, token);
-  isLoggedInVar(true);
-  tokenVar(token);
-};
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),

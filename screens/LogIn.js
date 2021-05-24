@@ -2,8 +2,8 @@ import { gql, useMutation } from "@apollo/client";
 import React, { useRef } from "react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { isLoggedInVar, logUserIn } from "../apollo";
 import { TextInput } from "../components/auth/AuthShared";
+import { logUserIn } from "../apollo";
 import AuthLayout from "../components/auth/AuthLayout";
 import AuthButton from "../components/auth/AuthButton";
 
@@ -30,18 +30,15 @@ export default function Login({ route: { params } }) {
       login: { ok, token },
     } = data;
     if (ok) {
-      await isLoggedInVar(token);
+      await logUserIn(token);
     }
   };
-
   const [logInMutation, { loading }] = useMutation(LOGIN_MUTATION, {
     onCompleted,
   });
-
   const onNext = (nextOne) => {
     nextOne?.current?.focus();
   };
-
   const onValid = (data) => {
     if (!loading) {
       logInMutation({
@@ -60,7 +57,6 @@ export default function Login({ route: { params } }) {
       required: true,
     });
   }, [register]);
-
   return (
     <AuthLayout>
       <TextInput

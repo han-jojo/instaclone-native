@@ -1,7 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import React from "react";
-import { Text, View } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList, Text, View } from "react-native";
 import ScreenLayout from "../components/ScreenLayout";
 import { COMMENT_FRAGMENT, PHOTO_FRAGMENT } from "../fragments";
 
@@ -25,9 +24,9 @@ const FEED_QUERY = gql`
   ${COMMENT_FRAGMENT}
 `;
 
-export default function Feed({}) {
+export default function Feed() {
   const { data, loading } = useQuery(FEED_QUERY);
-
+  console.log(data);
   const renderPhoto = ({ item: photo }) => {
     return (
       <View style={{ flex: 1 }}>
