@@ -32,9 +32,11 @@ export default function Feed() {
       offset: 0,
     },
   });
+
   const renderPhoto = ({ item: photo }) => {
     return <Photo {...photo} />;
   };
+
   const refresh = async () => {
     setRefreshing(true);
     await refetch();
