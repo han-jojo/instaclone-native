@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Text, View, FlatList } from "react-native";
 import { gql, useQuery } from "@apollo/client";
-import UserRow from "../components/UserRow";
+import { USER_FRAGMENT } from "../fragments";
 import ScreenLayout from "../components/ScreenLayout";
+import UserRow from "../components/UserRow";
 
 const LIKES_QUERY = gql`
   query seePhotoLikes($id: Int!) {
@@ -10,9 +11,10 @@ const LIKES_QUERY = gql`
       ...UserFragment
     }
   }
+  ${USER_FRAGMENT}
 `;
 
-export default function Likes(route) {
+export default function Likes({ route }) {
   const [refreshing, setRefreshing] = useState(false);
   const { data, loading, refetch } = useQuery(LIKES_QUERY, {
     variables: {
@@ -20,14 +22,12 @@ export default function Likes(route) {
     },
     skip: !route?.params?.photoId,
   });
-
   const renderUser = ({ item: user }) => <UserRow {...user} />;
   const onRefresh = async () => {
     setRefreshing(true);
     await refetch();
     setRefreshing(false);
   };
-
   return (
     <ScreenLayout loading={loading}>
       <FlatList
@@ -35,7 +35,8 @@ export default function Likes(route) {
         onRefresh={onRefresh}
         data={data?.seePhotoLikes}
         keyExtractor={(item) => "" + item.id}
-        renderItem={{ width: "100%" }}
+        renderItem={renderUser}
+        style={{ width: "100%" }}
       />
     </ScreenLayout>
   );
