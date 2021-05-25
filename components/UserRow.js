@@ -10,18 +10,16 @@ const Wrapper = styled.View`
   padding: 5px 10px;
 `;
 
-const Column = styled.View`
+const Column = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
 `;
-
 const Avatar = styled.Image`
   width: 40px;
   height: 40px;
   border-radius: 25px;
   margin-right: 10px;
 `;
-
 const Username = styled.Text`
   font-weight: 600;
   color: white;
@@ -40,7 +38,6 @@ const FollowBtnText = styled.Text`
 
 export default function UserRow({ avatar, id, username, isFollowing, isMe }) {
   const navigation = useNavigation();
-
   return (
     <Wrapper>
       <Column
