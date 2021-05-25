@@ -1,17 +1,42 @@
-import React from "react";
-import { Text, View } from "react-native";
+import React, { useState } from "react";
+import { Text, View, FlatList } from "react-native";
+import { gql, useQuery } from "@apollo/client";
+import UserRow from "../components/UserRow";
+import ScreenLayout from "../components/ScreenLayout";
 
-export default function Likes() {
+const LIKES_QUERY = gql`
+  query seePhotoLikes($id: Int!) {
+    seePhotoLikes(id: $id) {
+      ...UserFragment
+    }
+  }
+`;
+
+export default function Likes(route) {
+  const [refreshing, setRefreshing] = useState(false);
+  const { data, loading, refetch } = useQuery(LIKES_QUERY, {
+    variables: {
+      id: route?.params?.photoId,
+    },
+    skip: !route?.params?.photoId,
+  });
+
+  const renderUser = ({ item: user }) => <UserRow {...user} />;
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  };
+
   return (
-    <View
-      style={{
-        backgroundColor: "black",
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Text style={{ color: "white" }}>Likes</Text>
-    </View>
+    <ScreenLayout loading={loading}>
+      <FlatList
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+        data={data?.seePhotoLikes}
+        keyExtractor={(item) => "" + item.id}
+        renderItem={{ width: "100%" }}
+      />
+    </ScreenLayout>
   );
 }
