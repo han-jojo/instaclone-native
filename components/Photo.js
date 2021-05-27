@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { Image, useWindowDimensions } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -52,7 +52,6 @@ const Likes = styled.Text`
   margin: 7px 0px;
   font-weight: 600;
 `;
-
 const ExtraContainer = styled.View`
   padding: 10px;
 `;
@@ -66,7 +65,6 @@ function Photo({ id, user, caption, file, isLiked, likes }) {
       setImageHeight(height / 3);
     });
   }, [file]);
-
   const updateToggleLike = (cache, result) => {
     const {
       data: {
@@ -91,21 +89,18 @@ function Photo({ id, user, caption, file, isLiked, likes }) {
       });
     }
   };
-
   const [toggleLikeMutation] = useMutation(TOGGLE_LIKE_MUTATION, {
     variables: {
       id,
     },
     update: updateToggleLike,
   });
-
   const goToProfile = () => {
     navigation.navigate("Profile", {
       username: user.username,
       id: user.id,
     });
   };
-
   return (
     <Container>
       <Header onPress={goToProfile}>
@@ -165,5 +160,4 @@ Photo.propTypes = {
   likes: PropTypes.number.isRequired,
   commentNumber: PropTypes.number,
 };
-
 export default Photo;

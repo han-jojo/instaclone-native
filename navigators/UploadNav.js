@@ -28,7 +28,7 @@ export default function UploadNav() {
           <Stack.Navigator
             screenOptions={{
               headerTintColor: "white",
-              headerBackTitle: false,
+              headerBackTitleVisible: false,
               headerBackImage: ({ tintColor }) => (
                 <Ionicons color={tintColor} name="close" size={28} />
               ),
@@ -40,7 +40,7 @@ export default function UploadNav() {
           >
             <Stack.Screen
               name="Select"
-              options={{ title: "사진선택" }}
+              options={{ title: "사진 선택" }}
               component={SelectPhoto}
             />
           </Stack.Navigator>

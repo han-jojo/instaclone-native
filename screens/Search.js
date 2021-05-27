@@ -12,7 +12,7 @@ import {
 import styled from "styled-components/native";
 import DismissKeyboard from "../components/DismissKeyboard";
 
-const SEARCH_PHOTO = gql`
+const SEARCH_PHOTOS = gql`
   query searchPhotos($keyword: String!) {
     searchPhotos(keyword: $keyword) {
       id
@@ -26,7 +26,6 @@ const MessageContainer = styled.View`
   align-items: center;
   flex: 1;
 `;
-
 const MessageText = styled.Text`
   margin-top: 15px;
   color: white;
@@ -45,8 +44,7 @@ export default function Search({ navigation }) {
   const numColumns = 3;
   const { width } = useWindowDimensions();
   const { setValue, register, watch, handleSubmit } = useForm();
-  const [startQueryFn, { loading, data, called }] = useLazyQuery(SEARCH_PHOTO);
-
+  const [startQueryFn, { loading, data, called }] = useLazyQuery(SEARCH_PHOTOS);
   const onValid = ({ keyword }) => {
     startQueryFn({
       variables: {
@@ -54,13 +52,11 @@ export default function Search({ navigation }) {
       },
     });
   };
-
   const SearchBox = () => (
     <Input
       width={width}
-      style={{ backgroundColor: "white" }}
-      placeholderTextColor="black"
-      placeholder="검색"
+      placeholderTextColor="rgba(0, 0, 0, 0.8)"
+      placeholder="사진 검색"
       autoCapitalize="none"
       returnKeyLabel="Search"
       returnKeyType="search"
@@ -69,7 +65,6 @@ export default function Search({ navigation }) {
       onSubmitEditing={handleSubmit(onValid)}
     />
   );
-
   useEffect(() => {
     navigation.setOptions({
       headerTitle: SearchBox,
@@ -79,7 +74,6 @@ export default function Search({ navigation }) {
       minLength: 3,
     });
   }, []);
-
   const renderItem = ({ item: photo }) => (
     <TouchableOpacity
       onPress={() =>
@@ -94,10 +88,9 @@ export default function Search({ navigation }) {
       />
     </TouchableOpacity>
   );
-
   return (
     <DismissKeyboard>
-      <View style={{ backgroundColor: "black", flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: "black" }}>
         {loading ? (
           <MessageContainer>
             <ActivityIndicator size="large" />
@@ -110,7 +103,7 @@ export default function Search({ navigation }) {
           </MessageContainer>
         ) : null}
         {data?.searchPhotos !== undefined ? (
-          data?.searchPhotos.length === 0 ? (
+          data?.searchPhotos?.length === 0 ? (
             <MessageContainer>
               <MessageText>검색 결과 없음</MessageText>
             </MessageContainer>

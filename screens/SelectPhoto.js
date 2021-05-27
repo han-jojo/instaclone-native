@@ -34,7 +34,7 @@ const IconContainer = styled.View`
 
 const HeaderRightText = styled.Text`
   color: ${colors.blue};
-  font-weight: 16px;
+  font-size: 16px;
   font-weight: 600;
   margin-right: 7px;
 `;
@@ -43,17 +43,16 @@ export default function SelectPhoto({ navigation }) {
   const [ok, setOk] = useState(false);
   const [photos, setPhotos] = useState([]);
   const [chosenPhoto, setChosenPhoto] = useState("");
-
   const getPhotos = async () => {
     const { assets: photos } = await MediaLibrary.getAssetsAsync();
     setPhotos(photos);
     setChosenPhoto(photos[0]?.uri);
   };
-
   const getPermissions = async () => {
-    const { accessPrivileges, canAskAgain } =
-      await MediaLibrary.getPermissionsAsync();
-
+    const {
+      accessPrivileges,
+      canAskAgain,
+    } = await MediaLibrary.getPermissionsAsync();
     if (accessPrivileges === "none" && canAskAgain) {
       const { accessPrivileges } = await MediaLibrary.requestPermissionsAsync();
       if (accessPrivileges !== "none") {
@@ -65,23 +64,19 @@ export default function SelectPhoto({ navigation }) {
       getPhotos();
     }
   };
-
   const HeaderRight = () => (
     <TouchableOpacity>
       <HeaderRightText>Next</HeaderRightText>
     </TouchableOpacity>
   );
-
   useEffect(() => {
     getPermissions();
   }, []);
-
   useEffect(() => {
     navigation.setOptions({
       headerRight: HeaderRight,
     });
   }, []);
-
   const numColumns = 4;
   const { width } = useWindowDimensions();
   const choosePhoto = (uri) => {
@@ -102,7 +97,6 @@ export default function SelectPhoto({ navigation }) {
       </IconContainer>
     </ImageContainer>
   );
-
   return (
     <Container>
       <Top>
