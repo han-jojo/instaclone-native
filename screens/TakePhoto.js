@@ -1,9 +1,9 @@
 import { Camera } from "expo-camera";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
-import styled from "styled-components/native";
 import Slider from "@react-native-community/slider";
+import styled from "styled-components/native";
 
 const Container = styled.View`
   flex: 1;
@@ -12,13 +12,14 @@ const Container = styled.View`
 
 const Actions = styled.View`
   flex: 0.35;
-  flex-direction: row;
-  justify-content: center;
+  padding: 0px 50px;
   align-items: center;
+  justify-content: space-around;
 `;
 
 const ButtonsContainer = styled.View`
   width: 100%;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
 `;
@@ -45,19 +46,16 @@ export default function TakePhoto() {
   useEffect(() => {
     getPermissions();
   }, []);
-
-  const onCameraWsitch = () => {
+  const onCameraSwitch = () => {
     if (cameraType === Camera.Constants.Type.front) {
       setCameraType(Camera.Constants.Type.back);
     } else {
       setCameraType(Camera.Constants.Type.front);
     }
   };
-
   const onZoomValueChange = (e) => {
     setZoom(e);
   };
-
   return (
     <Container>
       <Camera type={cameraType} style={{ flex: 1 }} zoom={zoom} />
@@ -68,15 +66,13 @@ export default function TakePhoto() {
             minimumValue={0}
             maximumValue={1}
             minimumTrackTintColor="#FFFFFF"
-            maximumTrackTintColor="rgba(255,255,255,0.5)"
+            maximumTrackTintColor="rgba(255, 255, 255, 0.5)"
             onValueChange={onZoomValueChange}
           />
         </SliderContainer>
         <ButtonsContainer>
           <TakePhotoBtn />
-          <TouchableOpacity>
-            {" "}
-            onPress={onCameraWsitch}
+          <TouchableOpacity onPress={onCameraSwitch}>
             <Ionicons
               size={30}
               color="white"
@@ -88,7 +84,6 @@ export default function TakePhoto() {
             />
           </TouchableOpacity>
         </ButtonsContainer>
-        <TakePhotoBtn></TakePhotoBtn>
       </Actions>
     </Container>
   );
