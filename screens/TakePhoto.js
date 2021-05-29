@@ -1,7 +1,7 @@
 import { Camera } from "expo-camera";
 import React, { useEffect, useRef, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { Image, StatusBar, Text, TouchableOpacity } from "react-native";
+import { Alert, Image, StatusBar, Text, TouchableOpacity } from "react-native";
 import Slider from "@react-native-community/slider";
 import styled from "styled-components/native";
 import * as MediaLibrary from "expo-media-library";
@@ -44,9 +44,13 @@ const CloseButton = styled.TouchableOpacity`
   left: 20px;
 `;
 
+const PhotoActions = styled(Actions)`
+  flex-direction: row;
+`;
+
 const PhotoAction = styled.TouchableOpacity`
   background-color: white;
-  padding: 5px 10px;
+  padding: 10px 25px;
   border-radius: 4px;
 `;
 
@@ -94,6 +98,7 @@ export default function TakePhoto({ navigation }) {
   };
 
   const onCameraReady = () => setCameraReady(true);
+
   const takePhoto = async () => {
     if (camera.current && cameraReady) {
       const { uri } = await camera.current.takePictureAsync({
@@ -103,6 +108,25 @@ export default function TakePhoto({ navigation }) {
       const asset = await MediaLibrary.createAssetAsync(uri);
       setTakenPhoto(uri);
     }
+  };
+
+  const goToUpload = async (save) => {
+    if (save) {
+      await MediaLibrary.saveToLibraryAsync(takenPhoto);
+    }
+  };
+
+  const onUpload = () => {
+    Alert.alert("사진 저장", "저장하시겠습니까?", [
+      {
+        text: "업로드",
+        onPress: () => goToUpload(false),
+      },
+      {
+        text: "갤러리에 저장 및 업로드",
+        onPress: () => goToUpload(true),
+      },
+    ]);
   };
 
   const onDismiss = () => setTakenPhoto("");
@@ -131,6 +155,7 @@ export default function TakePhoto({ navigation }) {
           <SliderContainer>
             <Slider
               style={{ width: 200, height: 20 }}
+              value={zoom}
               minimumValue={0}
               maximumValue={1}
               minimumTrackTintColor="#FFFFFF"
@@ -174,17 +199,14 @@ export default function TakePhoto({ navigation }) {
           </ButtonsContainer>
         </Actions>
       ) : (
-        <Actions>
+        <PhotoActions>
           <PhotoAction onPress={onDismiss}>
             <PhotoActionText>취소</PhotoActionText>
           </PhotoAction>
-          <PhotoAction>
+          <PhotoAction onPress={onUpload}>
             <PhotoActionText>업로드</PhotoActionText>
           </PhotoAction>
-          <PhotoAction>
-            <PhotoActionText>저장 및 업로드</PhotoActionText>
-          </PhotoAction>
-        </Actions>
+        </PhotoActions>
       )}
     </Container>
   );
