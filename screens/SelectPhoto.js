@@ -5,6 +5,7 @@ import styled from "styled-components/native";
 import {
   FlatList,
   Image,
+  StatusBar,
   TouchableOpacity,
   useWindowDimensions,
 } from "react-native";
@@ -49,10 +50,7 @@ export default function SelectPhoto({ navigation }) {
     setChosenPhoto(photos[0]?.uri);
   };
   const getPermissions = async () => {
-    const {
-      status,
-      canAskAgain,
-    } = await MediaLibrary.getPermissionsAsync();
+    const { status, canAskAgain } = await MediaLibrary.getPermissionsAsync();
     if (status === "undetermined" && canAskAgain) {
       const { status } = await MediaLibrary.requestPermissionsAsync();
       if (status !== "undetermined") {
@@ -99,6 +97,7 @@ export default function SelectPhoto({ navigation }) {
   );
   return (
     <Container>
+      <StatusBar />
       <Top>
         {chosenPhoto !== "" ? (
           <Image
