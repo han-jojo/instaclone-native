@@ -15,6 +15,7 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const onFinish = () => setLoading(false);
   const isLoggedIn = useReactiveVar(isLoggedInVar);
+
   const preloadAssets = () => {
     const fontsToLoad = [Ionicons.font];
     const fontPromises = fontsToLoad.map((font) => Font.loadAsync(font));
@@ -22,6 +23,7 @@ export default function App() {
     const imagePromises = imagesToLoad.map((image) => Asset.loadAsync(image));
     return Promise.all([...fontPromises, ...imagePromises]);
   };
+
   const preload = async () => {
     const token = await AsyncStorage.getItem("token");
     if (token) {
@@ -35,6 +37,7 @@ export default function App() {
     });
     return preloadAssets();
   };
+
   if (loading) {
     return (
       <AppLoading
@@ -44,6 +47,7 @@ export default function App() {
       />
     );
   }
+  
   return (
     <ApolloProvider client={client}>
       <NavigationContainer>
