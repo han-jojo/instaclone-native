@@ -107,8 +107,6 @@ export default function UploadForm({ route, navigation }) {
     });
   };
 
-  const onValid = ({ caption }) => {};
-
   return (
     <DismissKeyboard>
       <Container>
