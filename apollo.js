@@ -50,12 +50,12 @@ export const cache = new InMemoryCache({
   },
 });
 
-const onErrorLink = onError(({ graphQLerrors, networkError }) => {
-  if (graphQLerrors) {
-    console.log(`GraphQL eror`, graphQLerrors);
+const onErrorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    console.log(`GraphQL Error`, graphQLErrors);
   }
   if (networkError) {
-    console.log(`Network Error`, networkError);
+    console.log("Network Error", networkError);
   }
 });
 
