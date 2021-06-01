@@ -45,5 +45,5 @@ export const FEED_PHOTO = gql`
     createdAt
     isMine
   }
-  ${FEED_FRAGMENT}
+  ${PHOTO_FRAGMENT}
 `;

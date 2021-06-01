@@ -51,12 +51,12 @@ export default function UploadForm({ route, navigation }) {
     const {
       data: { uploadPhoto },
     } = result;
-
+    
     if (uploadPhoto.id) {
       cache.modify({
         id: "ROOT_QUERY",
         fields: {
-          seeFeed(pred) {
+          seeFeed(prev) {
             return [uploadPhoto, ...prev];
           },
         },
